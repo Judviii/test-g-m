@@ -28,7 +28,7 @@ CAPTCHA_API_KEY = os.getenv("CAPTCHA_API_KEY", None)
 
 
 # A function to automate the login process in LinkedIn
-# time.sleep(2) in function used used to protect against blocking
+# time.sleep(2) in function used to protect against blocking
 def linkedin_login(
         driver: WebDriver,
         login_url: str,
@@ -142,7 +142,7 @@ def get_linkedin_profile_picture_url(driver: WebDriver) -> str:
 
 
 # A function that detects recaptcha
-def recaptcha_present(driver) -> None | str:
+def recaptcha_present(driver: WebDriver) -> None | str:
     try:
         recaptcha_element = driver.find_element(By.CLASS_NAME, "g-recaptcha")
         sitekey = recaptcha_element.get_attribute("data-sitekey")
@@ -179,7 +179,7 @@ def recaptcha_solve_with_2captcha(
 
 
 # Function that downloads images from a link to a project folder
-def download_image(image_url, file_name) -> None:
+def download_image(image_url: str, file_name: str) -> None:
     logging.info("Starting download image")
     response = requests.get(image_url)
 
