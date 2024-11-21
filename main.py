@@ -22,9 +22,9 @@ load_dotenv()
 
 # Global variables
 LINKEDIN_LOGIN_URL = "https://www.linkedin.com/login/uk/"
-LINKEDIN_EMAIL = os.environ["LINKEDIN_EMAIL"]
-LINKEDIN_PASS = os.environ["LINKEDIN_PASS"]
-CAPTCHA_API_KEY = os.environ["CAPTCHA_API_KEY"]
+LINKEDIN_EMAIL = os.getenv("LINKEDIN_EMAIL", "Test_login")
+LINKEDIN_PASS = os.getenv("LINKEDIN_PASS", "Test_pass")
+CAPTCHA_API_KEY = os.getenv("CAPTCHA_API_KEY", None)
 
 
 # A function to automate the login process in LinkedIn
@@ -70,6 +70,8 @@ def linkedin_login(
         raise
 
     try:
+        # Turn off the “Remember me” checkbox to avoid LinkedIn notifications
+        # about a new device when you log in automatically
         auto_login_off = driver.find_element(By.ID, "rememberMeOptIn-checkbox")
         driver.execute_script("arguments[0].click();", auto_login_off)
         logging.info("Remember me checkbox off")
@@ -97,13 +99,17 @@ def linkedin_login(
     # if the function does not detect recaptcha but you have it,
     # it will give you 45 seconds to solve it yourself
     # time.sleep(45)
+
     try:
         WebDriverWait(driver, 10).until(
             EC.url_contains("/feed")
         )
         logging.info("Successful login.")
     except TimeoutException:
-        logging.critical("Login failed.")
+        logging.critical(
+            "Login failed. Please make sure that your email and password "
+            "are correct in the .env file."
+        )
         raise
 
 
