@@ -37,7 +37,7 @@ def linkedin_login(
 ) -> None:
     try:
         driver.get(login_url)
-
+        # Catching recaptcha
         sitekey = recaptcha_present(driver=driver)
         if sitekey:
             logging.info(f"Recaptcha spotted before login. Sitekey: {sitekey}")
@@ -87,6 +87,7 @@ def linkedin_login(
         logging.critical("Login button not found.")
         raise
 
+    # Catching recaptcha
     sitekey = recaptcha_present(driver=driver)
     if sitekey:
         logging.info(f"Recaptcha spotted after login. Sitekey: {sitekey}")
@@ -172,7 +173,7 @@ def recaptcha_solve_with_2captcha(
 
 
 # Function that downloads images from a link to a project folder
-def download_image(image_url, file_name):
+def download_image(image_url, file_name) -> None:
     logging.info("Starting download image")
     response = requests.get(image_url)
 
@@ -185,7 +186,7 @@ def download_image(image_url, file_name):
 
 
 # The main function in which all processes are launched
-def main():
+def main() -> None:
     logging.info(f"Script start: {datetime.now()}")
     options = Options()
     # Uncomment line below to run script in headless mode.
