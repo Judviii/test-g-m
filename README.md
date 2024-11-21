@@ -1,4 +1,13 @@
 # Test Task for G&M
+## Description
+The script automates the process of logging in to LinkedIn and uploading a user's profile photo, taking into account the possibility of a reCAPTCHA. The main stages of the script:
+
+- Login to LinkedIn: Using Selenium, the script opens the LinkedIn login page, enters the username and password, and processes possible reCAPTCHAs. If one appears, the script either waits 45 seconds for it to be manually resolved or provides for automatic resolution via the 2captcha API.
+
+- Getting a profile photo: After a successful login, the script goes to the user's profile page, finds the photo, and downloads it to the local computer.
+
+- Logging: All actions, including successes or errors, are recorded in the out.log file to track the script's execution.
+
 ## Prerequisites
 
 ### Before you can run this script, make sure you have the following installed:
